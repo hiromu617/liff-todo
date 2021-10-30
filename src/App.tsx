@@ -40,13 +40,13 @@ function App() {
         }
 
   return (
-    <div className="App">
+    <div className="App bg-blue-500">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <button className="button" onClick={sendMessage}>send message</button>
+        <button className="button bg-blue-100" onClick={sendMessage}>send message</button>
         <button className="button" onClick={getUserInfo}>show user info</button>
         <a
           className="App-link"
