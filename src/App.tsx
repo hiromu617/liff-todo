@@ -1,7 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import liff from '@line/liff';
 import './App.css';
+import {TodoItemList} from "./components/TodoItemList"
+import { Item } from './types/item.type';
+
+const TodoItems: Item[] = [
+  {id:1, title: "aaa", description: "aaa", finished: false},
+  {id:2, title: "aaabbb", description: "aaa", finished: true},
+  {id:3, title: "aaabbbccc", description: "aaa", finished: false}
+]
 
 function App() {
   const sendMessage = () => {
@@ -40,23 +47,10 @@ function App() {
         }
 
   return (
-    <div className="App bg-blue-500">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <button className="button bg-blue-100" onClick={sendMessage}>send message</button>
-        <button className="button" onClick={getUserInfo}>show user info</button>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="bg-blue-50 w-full min-h-screen">
+      <div className="w-1/2 m-auto">
+      <TodoItemList items={TodoItems}/>
+      </div>
     </div>
   );
 }
