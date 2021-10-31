@@ -56,8 +56,8 @@ function App() {
   };
 
   return (
-    <div className="bg-blue-50 w-full min-h-screen">
-      <div className="w-1/2 m-auto">
+    <div className="bg-blue-50 w-full min-h-screen px-5">
+      <div className="lg:w-1/2 w-full m-auto">
         <TodoItemList items={TodoItems} />
       </div>
     </div>

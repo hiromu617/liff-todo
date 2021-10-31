@@ -12,10 +12,7 @@ export const TodoItem: React.VFC<TodoItemProps> = ({ item }) => {
   return (
     <>
       <TodoDetailModal TodoItem={item} isOpen={isOpen} setIsOpen={setIsOpen} />
-      <button
-        className="flex gap-5 justify-start items-center bg-white p-5 rounded-lg shadow-md"
-        onClick={() => setIsOpen(true)}
-      >
+      <div className="flex gap-5 justify-start items-center bg-white p-5 rounded-lg shadow-md">
         <button>
           <CheckIcon
             className={`h-6 w-6 ${
@@ -25,8 +22,13 @@ export const TodoItem: React.VFC<TodoItemProps> = ({ item }) => {
             }`}
           />
         </button>
-        <label className="font-semibold text-lg">{item.title}</label>
-      </button>
+        <label
+          onClick={() => setIsOpen(true)}
+          className="font-semibold text-lg hover:underline"
+        >
+          {item.title}
+        </label>
+      </div>
     </>
   );
 };
