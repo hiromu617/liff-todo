@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Item } from "../types/item.type";
+import { EditTodoForm } from "./EditTodoForm";
 
 export type TodoDetailModalProps = {
   TodoItem: Item;
@@ -42,29 +43,7 @@ export const TodoDetailModal: React.VFC<TodoDetailModalProps> = ({
             leaveTo="opacity-0 scale-95"
           >
             <div className="inline-block w-full  max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-2xl rounded-2xl">
-              <Dialog.Title
-                as="h3"
-                className="text-lg font-medium leading-6 text-gray-900"
-              >
-                {TodoItem.title}
-              </Dialog.Title>
-              <Dialog.Description className="mt-2">
-                <p className="text-sm text-gray-500">{TodoItem.description}</p>
-              </Dialog.Description>
-              <div className="mt-4 flex justify-end items-center gap-5">
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                >
-                  Save
-                </button>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
-                >
-                  Delete
-                </button>
-              </div>
+              <EditTodoForm TodoItem={TodoItem} />
             </div>
           </Transition.Child>
         </div>
