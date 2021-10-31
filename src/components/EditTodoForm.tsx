@@ -3,9 +3,13 @@ import { Item } from "../types/item.type";
 
 export type EditTodoFormProps = {
   TodoItem: Item;
+  isEditable: boolean;
 };
 
-export const EditTodoForm: React.VFC<EditTodoFormProps> = ({ TodoItem }) => {
+export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
+  TodoItem,
+  isEditable,
+}) => {
   const [formData, setFormData] = useState({
     title: TodoItem.title,
     description: TodoItem.description,
@@ -31,6 +35,7 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({ TodoItem }) => {
           name={formData.title}
           placeholder="Todo title"
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+          disabled={!isEditable}
         />
       </div>
       <div className="mt-4">
@@ -45,15 +50,19 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({ TodoItem }) => {
           onChange={(e) =>
             setFormData({ ...formData, description: e.target.value })
           }
+          disabled={!isEditable}
         />
       </div>
       <div className="mt-4 flex justify-end items-center gap-5">
-        <button
-          type="submit"
-          className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-        >
-          Save
-        </button>
+        {isEditable && (
+          <button
+            type="submit"
+            className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+            disabled={!isEditable}
+          >
+            Save
+          </button>
+        )}
         <button
           onClick={() => deleteTodoItem()}
           className="inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Item } from "../types/item.type";
 import { EditTodoForm } from "./EditTodoForm";
@@ -14,6 +14,7 @@ export const TodoDetailModal: React.VFC<TodoDetailModalProps> = ({
   isOpen,
   setIsOpen,
 }) => {
+  const [isEditable, setIsEditable] = useState(false);
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -43,7 +44,15 @@ export const TodoDetailModal: React.VFC<TodoDetailModalProps> = ({
             leaveTo="opacity-0 scale-95"
           >
             <div className="inline-block w-full  max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-2xl rounded-2xl">
-              <EditTodoForm TodoItem={TodoItem} />
+              <div className="text-right">
+                <button
+                  className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md hover:bg-blue-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                  onClick={() => setIsEditable(!isEditable)}
+                >
+                  {isEditable ? "Lock": "Edit"}
+                </button>
+              </div>
+              <EditTodoForm TodoItem={TodoItem} isEditable={isEditable} />
             </div>
           </Transition.Child>
         </div>

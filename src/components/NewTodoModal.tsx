@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { Item } from "../types/item.type";
 import { NewTodoForm } from "./NewTodoForm";
 
 export type NewTodoModalProps = {
