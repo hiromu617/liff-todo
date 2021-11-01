@@ -3,12 +3,14 @@ import { Item } from "../types/item.type";
 import { CheckIcon } from "@heroicons/react/solid";
 import { TodoDetailModal } from "./TodoDetailModal";
 import { client } from "../api/axios";
+import { useFetchTodo } from "../hooks/useFetchTodo";
 
 export type TodoItemProps = {
   item: Item;
 };
 
 export const TodoItem: React.VFC<TodoItemProps> = ({ item }) => {
+  const { revalidate } = useFetchTodo();
   const [isOpen, setIsOpen] = useState(false);
   const toggleFinished = async () => {
     try {
@@ -16,6 +18,7 @@ export const TodoItem: React.VFC<TodoItemProps> = ({ item }) => {
         finished: !item.finished,
       });
       console.log(res.data);
+      revalidate()
     } catch (e) {
       console.error(e);
     }

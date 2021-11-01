@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { client } from "../api/axios";
+import { useFetchTodo } from "../hooks/useFetchTodo";
 
 export const NewTodoForm: React.VFC = () => {
+  const { revalidate } = useFetchTodo();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -17,6 +19,7 @@ export const NewTodoForm: React.VFC = () => {
         description: formData.description,
       });
       console.log(res.data);
+      revalidate();
     } catch (e) {
       console.error(e);
     }

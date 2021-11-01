@@ -3,6 +3,7 @@ import React from "react";
 import "./App.css";
 import { TodoItemList } from "./components/TodoItemList";
 import { Item } from "./types/item.type";
+import { TodoItemStateProvider } from "./contexts/TodoItemStateContext";
 
 const TodoItems: Item[] = [
   { id: 1, title: "aaa", description: "aaa", finished: false },
@@ -56,11 +57,13 @@ function App() {
   // };
 
   return (
-    <div className="bg-blue-50 w-full min-h-screen px-5">
-      <div className="lg:w-1/2 w-full m-auto">
-        <TodoItemList items={TodoItems} />
+    <TodoItemStateProvider>
+      <div className="bg-blue-50 w-full min-h-screen px-5">
+        <div className="lg:w-1/2 w-full m-auto">
+          <TodoItemList items={TodoItems} />
+        </div>
       </div>
-    </div>
+    </TodoItemStateProvider>
   );
 }
 

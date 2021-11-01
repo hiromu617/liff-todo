@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Item } from "../types/item.type";
 import { client } from "../api/axios";
+import { useFetchTodo } from "../hooks/useFetchTodo";
 
 export type EditTodoFormProps = {
   TodoItem: Item;
@@ -11,6 +12,7 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
   TodoItem,
   isEditable,
 }) => {
+  const { revalidate } = useFetchTodo();
   const [formData, setFormData] = useState({
     title: TodoItem.title,
     description: TodoItem.description,
@@ -25,6 +27,9 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
         description: formData.description,
       });
       console.log(res.data);
+
+      // データを再取得
+      revalidate();
     } catch (e) {
       console.error(e);
     }
@@ -34,6 +39,7 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
     try {
       const res = await client.delete(`/item/${TodoItem.id}`);
       console.log(res.data);
+      revalidate()
     } catch (e) {
       console.error(e);
     }

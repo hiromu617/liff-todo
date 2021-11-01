@@ -1,34 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Item } from "../types/item.type";
 import { TodoItem } from "./TodoItem";
 import { PlusIcon } from "@heroicons/react/solid";
 import { NewTodoModal } from "./NewTodoModal";
-import { client } from "../api/axios";
+import { useTodoItemState } from "../contexts/TodoItemStateContext";
+import { useFetchTodo } from "../hooks/useFetchTodo";
 
 export type TodoItemListProps = {
   items: Item[];
 };
 
 export const TodoItemList: React.VFC<TodoItemListProps> = ({ items }) => {
-  // const finishedItem = items.filter((item) => item.finished);
-  // const notYetFinishedItem = items.filter((item) => !item.finished);
-  const [finishedItem, setFinishedItem] = useState<Item[]>([])
-  const [notFinishedItem, setNotFinishedItem] = useState<Item[]>([])
+  useFetchTodo();
+  const { finishedItem, notFinishedItem } = useTodoItemState();
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        const res = await client.get("/item");
-        console.log(res.data)
-        setFinishedItem(res.data.filter((item: Item) => item.finished))
-        setNotFinishedItem(res.data.filter((item: Item) => !item.finished))
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    fetchItems()
-  }, []);
 
   return (
     <>
