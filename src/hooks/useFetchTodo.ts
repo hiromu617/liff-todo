@@ -9,6 +9,7 @@ export const useFetchTodo = () => {
   // マウント時にデータを取得
   useEffect(() => {
     fetchItems();
+    // eslint-disable-next-line
   }, [setTodoItem]);
 
   const fetchItems = async () => {
