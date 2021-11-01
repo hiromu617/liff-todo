@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Item } from "../types/item.type";
+import { client } from "../api/axios";
 
 export type EditTodoFormProps = {
   TodoItem: Item;
@@ -15,12 +16,28 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
     description: TodoItem.description,
   });
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log(formData);
+    try {
+      const res = await client.put(`/item/${TodoItem.id}`, {
+        title: formData.title,
+        description: formData.description,
+      });
+      console.log(res.data);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  const deleteTodoItem = () => {};
+  const deleteTodoItem = async () => {
+    try {
+      const res = await client.delete(`/item/${TodoItem.id}`);
+      console.log(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit}>

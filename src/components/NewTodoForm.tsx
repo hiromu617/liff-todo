@@ -1,14 +1,25 @@
 import React, { useState } from "react";
+import { client } from "../api/axios";
 
 export const NewTodoForm: React.VFC = () => {
   const [formData, setFormData] = useState({
     title: "",
-    description: ""
-  })
+    description: "",
+  });
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault()
-    console.log(formData)
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    console.log(formData);
+    // Todo: validation
+    try {
+      const res = await client.post("/item", {
+        title: formData.title,
+        description: formData.description,
+      });
+      console.log(res.data);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -23,7 +34,7 @@ export const NewTodoForm: React.VFC = () => {
           type="text"
           name={formData.title}
           placeholder="Todo title"
-          onChange={(e) => setFormData({...formData, title: e.target.value})}
+          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
         />
       </div>
       <div className="mt-4">
@@ -35,7 +46,9 @@ export const NewTodoForm: React.VFC = () => {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           name="description"
           placeholder="Todo Description"
-          onChange={(e) => setFormData({...formData, description: e.target.value})}
+          onChange={(e) =>
+            setFormData({ ...formData, description: e.target.value })
+          }
         />
       </div>
       <div className="mt-4 flex justify-end items-center gap-5">
