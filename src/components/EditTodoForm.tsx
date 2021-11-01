@@ -6,11 +6,13 @@ import { useFetchTodo } from "../hooks/useFetchTodo";
 export type EditTodoFormProps = {
   TodoItem: Item;
   isEditable: boolean;
+  close: () => void;
 };
 
 export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
   TodoItem,
   isEditable,
+  close,
 }) => {
   const { revalidate } = useFetchTodo();
   const [formData, setFormData] = useState({
@@ -18,7 +20,7 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
     description: TodoItem.description,
   });
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
+  const updateTodoItem = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log(formData);
     try {
@@ -32,6 +34,8 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
       revalidate();
     } catch (e) {
       console.error(e);
+    } finally {
+      close();
     }
   };
 
@@ -39,14 +43,16 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
     try {
       const res = await client.delete(`/item/${TodoItem.id}`);
       console.log(res.data);
-      revalidate()
+      revalidate();
     } catch (e) {
       console.error(e);
+    } finally {
+      close();
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={updateTodoItem}>
       <div className="mt-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Title

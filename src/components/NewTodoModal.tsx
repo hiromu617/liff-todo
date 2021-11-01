@@ -11,6 +11,9 @@ export const NewTodoModal: React.VFC<NewTodoModalProps> = ({
   isOpen,
   setIsOpen,
 }) => {
+  const close = () => {
+    setIsOpen(false);
+  };
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -46,7 +49,7 @@ export const NewTodoModal: React.VFC<NewTodoModalProps> = ({
               >
                 New Todo
               </Dialog.Title>
-              <NewTodoForm />
+              <NewTodoForm close={close}/>
             </div>
           </Transition.Child>
         </div>

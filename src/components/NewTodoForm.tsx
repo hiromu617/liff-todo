@@ -2,14 +2,18 @@ import React, { useState } from "react";
 import { client } from "../api/axios";
 import { useFetchTodo } from "../hooks/useFetchTodo";
 
-export const NewTodoForm: React.VFC = () => {
+export type NewTodoFormProps = {
+  close: () => void;
+};
+
+export const NewTodoForm: React.VFC<NewTodoFormProps> = ({ close }) => {
   const { revalidate } = useFetchTodo();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
   });
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
+  const createTodoItem = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log(formData);
     // Todo: validation
@@ -22,11 +26,13 @@ export const NewTodoForm: React.VFC = () => {
       revalidate();
     } catch (e) {
       console.error(e);
+    } finally {
+      close();
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={createTodoItem}>
       <div className="mt-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Title

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSetTodoItemState } from "../contexts/TodoItemStateContext";
 import { client } from "../api/axios";
 import { Item } from "../types/item.type";

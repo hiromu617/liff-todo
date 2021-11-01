@@ -15,6 +15,9 @@ export const TodoDetailModal: React.VFC<TodoDetailModalProps> = ({
   setIsOpen,
 }) => {
   const [isEditable, setIsEditable] = useState(false);
+  const close = () => {
+    setIsOpen(false)
+  }
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -52,7 +55,7 @@ export const TodoDetailModal: React.VFC<TodoDetailModalProps> = ({
                   {isEditable ? "Lock": "Edit"}
                 </button>
               </div>
-              <EditTodoForm TodoItem={TodoItem} isEditable={isEditable} />
+              <EditTodoForm TodoItem={TodoItem} isEditable={isEditable} close={close}/>
             </div>
           </Transition.Child>
         </div>
