@@ -13,16 +13,16 @@ export type TodoItemListProps = {
 export const TodoItemList: React.VFC<TodoItemListProps> = ({ items }) => {
   useFetchTodo();
   const { finishedItem, notFinishedItem } = useTodoItemState();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isNewTodoModalOpen, setIsNewTodoModalOpen] = useState(false);
 
   return (
     <>
-      <NewTodoModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <NewTodoModal isOpen={isNewTodoModalOpen} setIsOpen={setIsNewTodoModalOpen} />
       <div className="py-20">
         <div className="mb-5 text-center">
           <button
             className="flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 w-full border-b-4 border-blue-700 hover:border-blue-500 rounded"
-            onClick={() => setIsOpen(true)}
+            onClick={() => setIsNewTodoModalOpen(true)}
           >
             <PlusIcon className="h-5 w-5 text-white " />
             New Todo
@@ -33,8 +33,8 @@ export const TodoItemList: React.VFC<TodoItemListProps> = ({ items }) => {
             <TodoItem item={item} />
           ))}
         </div>
-        <div className="bg-blue-400 px-5 py-2 my-5 rounded">
-          <h2 className="text-xl font-semibold text-white">Finished</h2>
+        <div className="bg-blue-400 px-5 py-2 my-5 rounded text-center">
+          <h2 className="font-bold text-lg text-white">Finished</h2>
         </div>
         <div className="flex flex-col gap-5">
           {finishedItem.map((item) => (

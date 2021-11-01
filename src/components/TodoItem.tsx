@@ -11,21 +11,25 @@ export type TodoItemProps = {
 
 export const TodoItem: React.VFC<TodoItemProps> = ({ item }) => {
   const { revalidate } = useFetchTodo();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isTodoDetailModalOpen, setIsTodoDetailModalOpen] = useState(false);
   const toggleFinished = async () => {
     try {
       const res = await client.put(`/item/${item.id}`, {
         finished: !item.finished,
       });
       console.log(res.data);
-      revalidate()
+      revalidate();
     } catch (e) {
       console.error(e);
     }
   };
   return (
     <>
-      <TodoDetailModal TodoItem={item} isOpen={isOpen} setIsOpen={setIsOpen} />
+      <TodoDetailModal
+        TodoItem={item}
+        isOpen={isTodoDetailModalOpen}
+        setIsOpen={setIsTodoDetailModalOpen}
+      />
       <div className="flex gap-5 justify-start items-center bg-white p-5 rounded-lg shadow-md">
         <button>
           <CheckIcon
@@ -38,7 +42,7 @@ export const TodoItem: React.VFC<TodoItemProps> = ({ item }) => {
           />
         </button>
         <label
-          onClick={() => setIsOpen(true)}
+          onClick={() => setIsTodoDetailModalOpen(true)}
           className="font-semibold text-lg hover:underline"
         >
           {item.title}
