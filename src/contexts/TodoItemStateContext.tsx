@@ -5,16 +5,16 @@ export type TodoItemState = {
   /**
    * 終了したTodoItem
    */
-  finishedItem: Item[];
+  finishedItem: Item[] | null;
   /**
    * 終了していないTodoItem
    */
-  notFinishedItem: Item[];
+  notFinishedItem: Item[] | null;
 };
 
 const initialState: TodoItemState = {
-  finishedItem: [],
-  notFinishedItem: [],
+  finishedItem: null,
+  notFinishedItem: null,
 };
 
 const TodoItemStateContext = React.createContext<TodoItemState>(initialState);
@@ -37,8 +37,8 @@ export const TodoItemStateProvider: React.FC<TodoItemStateProviderProps> = (
   props
 ) => {
   const [TodoItem, setTodoItem] = useState<TodoItemState>({
-    finishedItem: [],
-    notFinishedItem: [],
+    finishedItem: null,
+    notFinishedItem: null,
   });
 
   return (
