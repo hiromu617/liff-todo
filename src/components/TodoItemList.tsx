@@ -3,14 +3,21 @@ import { TodoItem } from "./TodoItem";
 import { PlusIcon } from "@heroicons/react/solid";
 import { NewTodoModal } from "./NewTodoModal";
 import { useTodoItemState } from "../contexts/TodoItemStateContext";
+import { useFetchTodo } from "../hooks/useFetchTodo";
+import { useFetchUserId } from "../hooks/useFetchUserId";
 
 export const TodoItemList: React.VFC = () => {
   const { finishedItem, notFinishedItem } = useTodoItemState();
   const [isNewTodoModalOpen, setIsNewTodoModalOpen] = useState(false);
+  useFetchTodo();
+  useFetchUserId();
 
   return (
     <>
-      <NewTodoModal isOpen={isNewTodoModalOpen} setIsOpen={setIsNewTodoModalOpen} />
+      <NewTodoModal
+        isOpen={isNewTodoModalOpen}
+        setIsOpen={setIsNewTodoModalOpen}
+      />
       <div className="py-20">
         <div className="mb-5 text-center">
           <button
