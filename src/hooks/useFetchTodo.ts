@@ -2,19 +2,22 @@ import { useEffect } from "react";
 import { useSetTodoItemState } from "../contexts/TodoItemStateContext";
 import { client } from "../api/axios";
 import { Item } from "../types/item.type";
+import { useUserIdState } from "../contexts/UserIdStateContext";
 
 export const useFetchTodo = () => {
   const setTodoItem = useSetTodoItemState();
+  const { userId } = useUserIdState();
 
   // マウント時にデータを取得
   useEffect(() => {
-    fetchItems();
+    if (!userId) return;
+    fetchItems(userId);
     // eslint-disable-next-line
-  }, [setTodoItem]);
+  }, [setTodoItem, userId]);
 
-  const fetchItems = async () => {
+  const fetchItems = async (userId: string) => {
     try {
-      const res = await client.get("/item");
+      const res = await client.get(`/item/${userId}`);
       console.log(res.data);
       const TodoItems: Item[] = res.data;
       setTodoItem({
@@ -26,6 +29,11 @@ export const useFetchTodo = () => {
     }
   };
 
+  const revalidate = () => {
+    if (!userId) return;
+    fetchItems(userId);
+  };
+
   // データを再取得する
-  return { revalidate: fetchItems } as const;
+  return { revalidate: revalidate } as const;
 };

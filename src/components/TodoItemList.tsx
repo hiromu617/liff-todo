@@ -9,8 +9,8 @@ import { useFetchUserId } from "../hooks/useFetchUserId";
 export const TodoItemList: React.VFC = () => {
   const { finishedItem, notFinishedItem } = useTodoItemState();
   const [isNewTodoModalOpen, setIsNewTodoModalOpen] = useState(false);
-  useFetchTodo();
   useFetchUserId();
+  useFetchTodo();
 
   return (
     <>
