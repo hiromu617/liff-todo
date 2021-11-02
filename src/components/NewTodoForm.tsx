@@ -9,6 +9,7 @@ export type NewTodoFormProps = {
 
 export const NewTodoForm: React.VFC<NewTodoFormProps> = ({ close }) => {
   const { userId } = useUserIdState();
+  console.log(userId)
   const { revalidate } = useFetchTodo();
   const [formData, setFormData] = useState({
     title: "",

@@ -14,6 +14,7 @@ export const useFetchUserId = () => {
         liff
           .getProfile() // ユーザ情報を取得する
           .then((profile) => {
+            console.log(profile)
             const userId: string = profile.userId;
             setUserId({ userId });
           })
