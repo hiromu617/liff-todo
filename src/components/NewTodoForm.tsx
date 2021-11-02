@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { client } from "../api/axios";
 import { useFetchTodo } from "../hooks/useFetchTodo";
+import { useUserIdState } from "../contexts/UserIdStateContext";
 
 export type NewTodoFormProps = {
   close: () => void;
 };
 
 export const NewTodoForm: React.VFC<NewTodoFormProps> = ({ close }) => {
+  const { userId } = useUserIdState();
   const { revalidate } = useFetchTodo();
   const [formData, setFormData] = useState({
     title: "",
@@ -21,6 +23,7 @@ export const NewTodoForm: React.VFC<NewTodoFormProps> = ({ close }) => {
       const res = await client.post("/item", {
         title: formData.title,
         description: formData.description,
+        user_id: userId
       });
       console.log(res.data);
       revalidate();

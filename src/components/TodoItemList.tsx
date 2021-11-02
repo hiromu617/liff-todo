@@ -1,17 +1,10 @@
 import React, { useState } from "react";
-import { Item } from "../types/item.type";
 import { TodoItem } from "./TodoItem";
 import { PlusIcon } from "@heroicons/react/solid";
 import { NewTodoModal } from "./NewTodoModal";
 import { useTodoItemState } from "../contexts/TodoItemStateContext";
-import { useFetchTodo } from "../hooks/useFetchTodo";
 
-export type TodoItemListProps = {
-  items: Item[];
-};
-
-export const TodoItemList: React.VFC<TodoItemListProps> = ({ items }) => {
-  useFetchTodo();
+export const TodoItemList: React.VFC = () => {
   const { finishedItem, notFinishedItem } = useTodoItemState();
   const [isNewTodoModalOpen, setIsNewTodoModalOpen] = useState(false);
 
