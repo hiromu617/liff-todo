@@ -36,7 +36,9 @@ export const TodoItemList: React.VFC = () => {
             </>
           )}
           {notFinishedItem &&
-            notFinishedItem.map((item) => <TodoItem item={item} />)}
+            notFinishedItem.map((item) => (
+              <TodoItem key={item.id} item={item} />
+            ))}
         </div>
         <div className="bg-blue-400 px-5 py-2 my-5 rounded text-center">
           <h2 className="font-bold text-lg text-white">Finished</h2>
@@ -45,7 +47,8 @@ export const TodoItemList: React.VFC = () => {
           {!finishedItem && (
             <div className="animate-pulse w-full rounded-lg bg-blue-300 h-16"></div>
           )}
-          {finishedItem && finishedItem.map((item) => <TodoItem item={item} />)}
+          {finishedItem &&
+            finishedItem.map((item) => <TodoItem key={item.id} item={item} />)}
         </div>
       </div>
     </>

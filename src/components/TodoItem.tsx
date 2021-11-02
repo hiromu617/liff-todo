@@ -43,7 +43,7 @@ export const TodoItem: React.VFC<TodoItemProps> = ({ item }) => {
         </button>
         <label
           onClick={() => setIsTodoDetailModalOpen(true)}
-          className="font-semibold text-lg hover:underline"
+          className="font-semibold text-lg underline flex-1"
         >
           {item.title}
         </label>
