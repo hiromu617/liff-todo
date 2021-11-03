@@ -10,14 +10,14 @@ export const useFetchTodo = () => {
 
   // マウント時にデータを取得
   useEffect(() => {
-    // if (!userId) return;
-    fetchItems();
+    if (!userId) return;
+    fetchItems(userId);
     // eslint-disable-next-line
   }, [setTodoItem, userId]);
 
-  const fetchItems = async () => {
+  const fetchItems = async (user_id: string) => {
     try {
-      const res = await client.get(`/item/`);
+      const res = await client.get(`/item/${user_id}`);
       console.log(res.data);
       const TodoItems: Item[] = res.data;
       setTodoItem({
@@ -30,8 +30,8 @@ export const useFetchTodo = () => {
   };
 
   const revalidate = () => {
-    // if (!userId) return;
-    fetchItems();
+    if (!userId) return;
+    fetchItems(userId);
   };
 
   // データを再取得する
