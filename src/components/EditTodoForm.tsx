@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Item } from "../types/item.type";
 import { client } from "../api/axios";
 import { useFetchTodo } from "../hooks/useFetchTodo";
+import { useUserIdState } from "../contexts/UserIdStateContext";
 
 export type EditTodoFormProps = {
   TodoItem: Item;
@@ -20,6 +21,7 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
     description: TodoItem.description,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { userId } = useUserIdState();
 
   const updateTodoItem = async (e: React.SyntheticEvent) => {
     setIsSubmitting(true);
@@ -29,6 +31,7 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
       const res = await client.put(`/item/${TodoItem.id}`, {
         title: formData.title,
         description: formData.description,
+        user_id: userId,
       });
       console.log(res.data);
 
