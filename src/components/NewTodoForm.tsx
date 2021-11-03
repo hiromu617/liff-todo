@@ -1,43 +1,29 @@
 import React, { useState } from "react";
-import { client } from "../api/axios";
-import { useFetchTodo } from "../hooks/useFetchTodo";
-import { useUserIdState } from "../contexts/UserIdStateContext";
+import { useCreateTodoItem } from "../hooks/useCreateTodoItem";
 
 export type NewTodoFormProps = {
   close: () => void;
 };
 
 export const NewTodoForm: React.VFC<NewTodoFormProps> = ({ close }) => {
-  const { userId } = useUserIdState();
-  const { revalidate } = useFetchTodo();
+  const createTodoItem = useCreateTodoItem();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const createTodoItem = async (e: React.SyntheticEvent) => {
-    setIsSubmitting(true)
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    setIsSubmitting(true);
     e.preventDefault();
     console.log(formData);
     // Todo: validation
-    try {
-      const res = await client.post("/item", {
-        title: formData.title,
-        description: formData.description,
-        user_id: userId,
-      });
-      console.log(res.data);
-      revalidate();
-    } catch (e) {
-      console.error(e);
-    } finally {
-      close();
-    }
+    await createTodoItem(formData)
+    close()
   };
 
   return (
-    <form onSubmit={createTodoItem}>
+    <form onSubmit={handleSubmit}>
       <div className="mt-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Title

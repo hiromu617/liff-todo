@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Item } from "../types/item.type";
-import { client } from "../api/axios";
-import { useFetchTodo } from "../hooks/useFetchTodo";
-import { useUserIdState } from "../contexts/UserIdStateContext";
+import { useUpdateTodoItem } from "../hooks/useUpdateTodoItem";
+import { useDeleteTodoItem } from "../hooks/useDeleteTodoItem";
 
 export type EditTodoFormProps = {
   TodoItem: Item;
@@ -15,59 +14,37 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
   isEditable,
   close,
 }) => {
-  const { revalidate } = useFetchTodo();
   const [formData, setFormData] = useState({
     title: TodoItem.title,
     description: TodoItem.description,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { userId } = useUserIdState();
+  const updateTodoItem = useUpdateTodoItem();
+  const deleteTodoItem = useDeleteTodoItem();
 
-  const updateTodoItem = async (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     setIsSubmitting(true);
     e.preventDefault();
     console.log(formData);
-    try {
-      const res = await client.put(`/item/${TodoItem.id}`, {
-        title: formData.title,
-        description: formData.description,
-        user_id: userId,
-      });
-      console.log(res.data);
-
-      // データを再取得
-      revalidate();
-    } catch (e) {
-      console.error(e);
-    } finally {
-      close();
-    }
+    await updateTodoItem(formData, TodoItem.id);
+    close();
   };
 
   // <form>の中に入れるとupdateTodoItemも走ってしまう
-  const deleteTodoItem = async () => {
-    try {
-      const res = await client.post(`/item/${TodoItem.id}/delete`, {
-        user_id: userId,
-      });
-      console.log(res.data);
-      revalidate();
-    } catch (e) {
-      console.error(e);
-    } finally {
-      close();
-    }
+  const handleDeleteTodoItem = async () => {
+    await deleteTodoItem(TodoItem.id);
+    close();
   };
 
   return (
     <>
       <button
-        onClick={() => deleteTodoItem()}
+        onClick={() => handleDeleteTodoItem()}
         className="inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
       >
         Delete
       </button>
-      <form onSubmit={updateTodoItem}>
+      <form onSubmit={handleSubmit}>
         <div className="mt-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Title
