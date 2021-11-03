@@ -14,7 +14,6 @@ export const TodoItem: React.VFC<TodoItemProps> = ({ item }) => {
   const [isTodoDetailModalOpen, setIsTodoDetailModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const toggleFinished = async () => {
-    if (isLoading) return;
     setIsLoading(true);
     try {
       const res = await client.put(`/item/${item.id}`, {
@@ -34,14 +33,13 @@ export const TodoItem: React.VFC<TodoItemProps> = ({ item }) => {
         setIsOpen={setIsTodoDetailModalOpen}
       />
       <div className="flex gap-5 justify-start items-center bg-white p-5 rounded-lg shadow-md">
-        <button>
+        <button onClick={() => toggleFinished()} disabled={isLoading}>
           <CheckIcon
             className={`h-6 w-6 ${
               item.finished
                 ? "text-blue-500"
                 : "text-blue-100 hover:text-blue-300"
             }`}
-            onClick={() => toggleFinished()}
           />
         </button>
         <label
