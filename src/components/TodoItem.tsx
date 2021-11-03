@@ -12,7 +12,10 @@ export type TodoItemProps = {
 export const TodoItem: React.VFC<TodoItemProps> = ({ item }) => {
   const { revalidate } = useFetchTodo();
   const [isTodoDetailModalOpen, setIsTodoDetailModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const toggleFinished = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
     try {
       const res = await client.put(`/item/${item.id}`, {
         finished: !item.finished,
