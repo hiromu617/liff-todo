@@ -9,14 +9,15 @@ export type NewTodoFormProps = {
 
 export const NewTodoForm: React.VFC<NewTodoFormProps> = ({ close }) => {
   const { userId } = useUserIdState();
-  console.log(userId)
   const { revalidate } = useFetchTodo();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const createTodoItem = async (e: React.SyntheticEvent) => {
+    setIsSubmitting(true)
     e.preventDefault();
     console.log(formData);
     // Todo: validation
@@ -24,7 +25,7 @@ export const NewTodoForm: React.VFC<NewTodoFormProps> = ({ close }) => {
       const res = await client.post("/item", {
         title: formData.title,
         description: formData.description,
-        user_id: userId
+        user_id: userId,
       });
       console.log(res.data);
       revalidate();
@@ -68,8 +69,9 @@ export const NewTodoForm: React.VFC<NewTodoFormProps> = ({ close }) => {
         <button
           type="submit"
           className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+          disabled={isSubmitting}
         >
-          Create
+          {isSubmitting ? "Submitting..." : "Create"}
         </button>
       </div>
     </form>

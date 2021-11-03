@@ -19,8 +19,10 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
     title: TodoItem.title,
     description: TodoItem.description,
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const updateTodoItem = async (e: React.SyntheticEvent) => {
+    setIsSubmitting(true);
     e.preventDefault();
     console.log(formData);
     try {
@@ -87,9 +89,9 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
           <button
             type="submit"
             className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-            disabled={!isEditable}
+            disabled={isSubmitting}
           >
-            Save
+            {isSubmitting ? "Submitting..." : "Save"}
           </button>
         )}
         <button
