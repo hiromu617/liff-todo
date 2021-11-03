@@ -61,7 +61,7 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
         </label>
         <input
           value={formData.title}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline disabled:text-gray-700 disabled:shadow-none disabled:border-transparent disabled:bg-white"
           type="text"
           name={formData.title}
           placeholder="Todo title"
@@ -75,7 +75,7 @@ export const EditTodoForm: React.VFC<EditTodoFormProps> = ({
         </label>
         <textarea
           value={formData.description}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline disabled:text-gray-700 disabled:shadow-none disabled:border-transparent disabled:bg-white"
           name="description"
           placeholder="Todo Description"
           onChange={(e) =>
